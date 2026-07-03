@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flipper Zero Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        .title-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .step {
+            transition: all 0.3s ease;
+        }
+        .step:hover {
+            transform: translateX(12px);
+            background-color: #18181b;
+        }
+        .mark {
+            background-color: #eab308;
+            color: black;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+        pre {
+            background-color: #27272a;
+            border: 2px solid #eab308;
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-200">
+
+    <div class="max-w-4xl mx-auto p-6">
+
+        <!-- Header -->
+        <div class="text-center mb-12 border-b border-yellow-500/30 pb-8">
+            <h1 class="title-font text-5xl font-bold text-yellow-400 mb-2">Flipper Zero Guide by thekillerofthemars</h1>
+            <p class="text-xl text-zinc-400">Marauder + Hashcat &amp; Momentum Asset Packs</p>
+        </div>
+
+        <!-- MARAUDER + HASHCAT -->
+        <div class="mb-16">
+            <div class="flex items-center gap-4 mb-8 bg-zinc-900 border border-yellow-500/50 rounded-3xl p-6">
+                <div class="text-4xl">📡</div>
+                <div>
+                    <h2 class="text-3xl font-bold title-font text-white">Flipper Marauder x Hashcat</h2>
+                    <p class="text-yellow-400 font-medium">(remember to delete necessary logs and pcaps to avoid confusion. If you don't get 4 handshakes, you must start over.)</p>
+                </div>
+            </div>
+
+            <ol class="space-y-5">
+                <li class="step bg-zinc-900 border border-zinc-700 rounded-2xl p-6 flex gap-6">
+                    <span class="font-mono text-3xl font-bold text-yellow-400 w-10">1.</span>
+                    <span class="text-lg">Open the Marauder app on your Flipper Zero and scan for "all" and wait until your network appears</span>
+                </li>
+                <li class="step bg-zinc-900 border border-zinc-700 rounded-2xl p-6 flex gap-6">
+                    <span class="font-mono text-3xl font-bold text-yellow-400 w-10">2.</span>
+                    <span class="text-lg">Check the list for your network number, then select that network in "Select"</span>
+                </li>
+                <li class="step bg-zinc-900 border border-zinc-700 rounded-2xl p-6 flex gap-6">
+                    <span class="font-mono text-3xl font-bold text-yellow-400 w-10">3.</span>
+                    <span class="text-lg">Go back and navigate down to "sniff", select PMKID, then choose either Targeted Passive or Active</span>
+                </li>
+                <li class="step bg-zinc-900 border border-zinc-700 rounded-2xl p-6 flex gap-6">
+                    <span class="font-mono text-3xl font-bold text-yellow-400 w-10">4.</span>
+                    <span class="text-lg">Disconnect and reconnect the device at least 4 times on the selected network. Others can do this too.</span>
+                </li>
+                <li class="step bg-zinc-900 border border-zinc-700 rounded-2xl p-6 flex gap-6">
+                    <span class="font-mono text-3xl font-bold text-yellow-400 w-10">5.</span>
+                    <span class="text-lg">After that, go back to AP Info. It should say <span class="mark">Complete EAPOL: true</span></span>
+                </li>
+                <li class="step bg-zinc-900 border border-zinc-700 rounded-2xl p-6 flex gap-6">
+                    <span class="font-mono text-3xl font-bold text-yellow-400 w-10">6.</span>
+                    <span class="text-lg">Connect the Flipper to your PC, go to SD Card/apps_data/marauder/pcaps and download the correct .pcap file</span>
+                </li>
+                <li class="step bg-zinc-900 border border-zinc-700 rounded-2xl p-6 flex gap-6">
+                    <span class="font-mono text-3xl font-bold text-yellow-400 w-10">7.</span>
+                    <span class="text-lg">Open the file in Wireshark and search for "eapol" in the filter. Check if you have 4 handshakes, if you have you can proceed.</span>
+                </li>
+                <li class="step bg-zinc-900 border border-zinc-700 rounded-2xl p-6 flex gap-6">
+                    <span class="font-mono text-3xl font-bold text-yellow-400 w-10">8.</span>
+                    <span class="text-lg">
+                        Upload the file to 
+                        <a href="https://hashcat.net/cap2hashcat/" target="_blank" class="text-yellow-400 underline hover:text-yellow-300">PCAP Converter to Hashcat</a>
+                    </span>
+                </li>
+                <li class="step bg-zinc-900 border border-zinc-700 rounded-2xl p-6 flex gap-6">
+                    <span class="font-mono text-3xl font-bold text-yellow-400 w-10">9.</span>
+                    <span class="text-lg">After conversion, take the converted file and place it in the root Hashcat folder. After that type "cmd" in the top directory bar and hit ENTER</span>
+                </li>
+                <li class="step bg-zinc-900 border border-zinc-700 rounded-2xl p-6 flex gap-6">
+                    <span class="font-mono text-3xl font-bold text-yellow-400 w-10">10.</span>
+                    <span class="text-lg">Then type: <span class="font-mono bg-zinc-800 px-3 py-1 rounded-lg">hashcat -m 22000 "name of converted file" "name of list with passwords.txt" -w 3</span></span>
+                </li>
+                <li class="step bg-zinc-900 border border-zinc-700 rounded-2xl p-6 flex gap-6">
+                    <span class="font-mono text-3xl font-bold text-yellow-400 w-10">11.</span>
+                    <span class="text-lg">Hit ENTER and wait for the results</span>
+                </li>
+                <li class="step bg-zinc-900 border border-yellow-500 rounded-2xl p-6 flex gap-6">
+                    <span class="text-lg"><span class="mark">The bigger the wordlist, the higher the chance of cracking the password</span></span>
+                </li>
+            </ol>
+        </div>
+
+        <hr class="border-zinc-700 my-16">
+
+        <!-- ASSET PACK -->
+        <div>
+            <div class="flex items-center gap-4 mb-8 bg-zinc-900 border border-purple-500/50 rounded-3xl p-6">
+                <div class="text-4xl">🎨</div>
+                <h2 class="text-3xl font-bold title-font">Asset Pack for Momentum</h2>
+            </div>
+
+            <ol class="space-y-5">
+                <li class="step bg-zinc-900 border border-zinc-700 rounded-2xl p-6 flex gap-6">
+                    <span class="font-mono text-3xl font-bold text-purple-400 w-10">1.</span>
+                    <span class="text-lg">Find a GIF you like and download it</span>
+                </li>
+                <li class="step bg-zinc-900 border border-zinc-700 rounded-2xl p-6 flex gap-6">
+                    <span class="font-mono text-3xl font-bold text-purple-400 w-10">2.</span>
+                    <span class="text-lg">
+                        Go to <a href="https://ezgif.com/resize" target="_blank" class="text-purple-400 underline hover:text-purple-300">Resize GIF</a> 
+                        and resize it to Width: 128, Height: 64
+                    </span>
+                </li>
+                <li class="step bg-zinc-900 border border-zinc-700 rounded-2xl p-6 flex gap-6">
+                    <span class="font-mono text-3xl font-bold text-purple-400 w-10">3.</span>
+                    <span class="text-lg">Click "Save" after resizing</span>
+                </li>
+                <li class="step bg-zinc-900 border border-zinc-700 rounded-2xl p-6 flex gap-6">
+                    <span class="font-mono text-3xl font-bold text-purple-400 w-10">4.</span>
+                    <span class="text-lg">
+                        Then go to <a href="https://ezgif.com/split" target="_blank" class="text-purple-400 underline hover:text-purple-300">Split GIFs into frames</a> and click "Download"
+                    </span>
+                </li>
+                <li class="step bg-zinc-900 border border-zinc-700 rounded-2xl p-6 flex gap-6">
+                    <span class="font-mono text-3xl font-bold text-purple-400 w-10">5.</span>
+                    <span class="text-lg">
+                        After ezgif, go to <a href="https://jaylikesbunda.github.io/F0-AssetPack-Maker/" target="_blank" class="text-purple-400 underline hover:text-purple-300">F0-AssetPack-Maker</a>
+                    </span>
+                </li>
+                <li class="step bg-zinc-900 border border-zinc-700 rounded-2xl p-6 flex gap-6">
+                    <span class="font-mono text-3xl font-bold text-purple-400 w-10">6.</span>
+                    <span class="text-lg">
+                        On the website do the following:<br>
+                        <span class="mark">Upload the folder with GIF frames</span><br>
+                        Pack name and Animation name: <span class="mark">Whatever you want</span><br>
+                        Pack type: <span class="mark">Animations only</span><br>
+                        Weight: <span class="mark">50</span>
+                    </span>
+                </li>
+                <li class="step bg-zinc-900 border border-zinc-700 rounded-2xl p-6 flex gap-6">
+                    <span class="font-mono text-3xl font-bold text-purple-400 w-10">7.</span>
+                    <span class="text-lg">Click "Export Asset Pack"</span>
+                </li>
+                <li class="step bg-zinc-900 border border-zinc-700 rounded-2xl p-6 flex gap-6">
+                    <span class="font-mono text-3xl font-bold text-purple-400 w-10">8.</span>
+                    <span class="text-lg">After downloading, unzip the file, go into the animations_xxxxxxx folder and open "meta.txt"</span>
+                </li>
+                <li class="step bg-zinc-900 border border-zinc-700 rounded-2xl p-6 flex gap-6">
+                    <span class="font-mono text-3xl font-bold text-purple-400 w-10">9.</span>
+                    <span class="text-lg">
+                        In "meta.txt" delete the following:<br>
+                        <pre class="mt-3 p-4 text-sm">Min butthurt: 0
+Max butthurt: 14
+Min level: 1
+Max level: 30
+Weight: 1</pre>
+                    </span>
+                </li>
+                <li class="step bg-zinc-900 border border-zinc-700 rounded-2xl p-6 flex gap-6">
+                    <span class="font-mono text-3xl font-bold text-purple-400 w-10">10.</span>
+                    <span class="text-lg">
+                        Change the following: <span class="mark">Duration 5 → 3600</span> and add 
+                        <span class="mark">Active cooldown: 0</span> then 
+                        <span class="mark">Bubble slots: 0</span>
+                    </span>
+                </li>
+                <li class="step bg-zinc-900 border border-yellow-500 rounded-2xl p-6">
+                    <span class="font-mono text-3xl font-bold text-yellow-400 w-10 inline-block">11.</span>
+                    <span class="text-lg">The final result should look like this:</span>
+                    <pre class="mt-4 p-6 text-sm leading-relaxed">
+Width: 128
+Height: 64
+Passive frames: 1
+Active frames: 0
+Frames order: 0
+Active cycles: 0
+Frame rate: 5 (This can be changed in Anim speed)
+Duration: 3600
+Active cooldown: 0
+Bubble slots: 0</pre>
+                </li>
+                <li class="step bg-zinc-900 border border-zinc-700 rounded-2xl p-6 flex gap-6">
+                    <span class="font-mono text-3xl font-bold text-purple-400 w-10">12.</span>
+                    <span class="text-lg">Copy the asset pack into SD Card/asset_packs in qFlipper</span>
+                </li>
+            </ol>
+        </div>
+
+        <div class="text-center mt-16 text-zinc-500 text-sm">
+            <span class="text-xs">Click on any step to mark it as completed</span>
+        </div>
+    </div>
+
+    <script>
+        // Click to mark steps as done
+        document.querySelectorAll('.step').forEach(step => {
+            step.addEventListener('click', () => {
+                step.classList.toggle('!border-green-500');
+                step.classList.toggle('bg-green-950/30');
+            });
+        });
+    </script>
+</body>
+</html>
