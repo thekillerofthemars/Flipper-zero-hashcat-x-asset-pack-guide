@@ -7,5 +7,5 @@ Hashcat - For password recovery
 Wireshark - For analysing network traffic
 qFlipper - For interacting with your flipper
 
-Disclamer: Only for educational purposes only.
+Disclamer: For educational purposes only.
 </pre>
